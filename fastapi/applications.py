@@ -75,13 +75,72 @@ class FastAPI(Starlette):
                 [Starlette docs for Applications](https://www.starlette.io/applications/#instantiating-the-application).
                 """
             ),
-        ] = False,
+        ] = None,
+        custom_router: Optional[routing.APIRouter] = None,
         routes: Annotated[
             Optional[List[BaseRoute]],
             Doc(
                 """
                 **Note**: you probably shouldn't use this parameter, it is inherited
                 from Starlette and supported for compatibility.
+        **extra: Annotated[
+            Any,
+            Doc(
+                """
+                Extra keyword arguments to be stored in the app, not used by FastAPI
+                anywhere.
+                """
+            ),
+        ],
+    ) -> None:
+        self.debug = debug
+        self.title = title
+        self.summary = summary
+        self.description = description
+        self.version = version
+        self.terms_of_service = terms_of_service
+        self.contact = contact
+        self.license_info = license_info
+        self.openapi_url = openapi_url
+        self.openapi_tags = openapi_tags
+        self.root_path_in_servers = root_path_in_servers
+        self.docs_url = docs_url
+        self.redoc_url = redoc_url
+        self.swagger_ui_oauth2_redirect_url = swagger_ui_oauth2_redirect_url
+        self.swagger_ui_init_oauth = swagger_ui_init_oauth
+        self.swagger_ui_parameters = swagger_ui_parameters
+        self.servers = servers or []
+        self.separate_input_output_schemas = separate_input_output_schemas
+        self.extra = extra
+        # Handle custom router
+        if custom_router is not None:
+            self.router = custom_router
+            if not hasattr(self.router, "setup"):
+                self.router.setup()
+        else:
+            self.router: routing.APIRouter = routing.APIRouter(
+                routes=routes,
+                redirect_slashes=redirect_slashes,
+                dependency_overrides_provider=self,
+                on_startup=on_startup,
+                on_shutdown=on_shutdown,
+                lifespan=lifespan,
+                default_response_class=default_response_class,
+                dependencies=dependencies,
+                callbacks=callbacks,
+                deprecated=deprecated,
+                include_in_schema=include_in_schema,
+                responses=responses,
+                generate_unique_id_function=generate_unique_id_function,
+            )
+        custom_router: Annotated[
+            Optional[routing.APIRouter],
+            Doc(
+                """
+                Allows passing a custom router instance that extends `APIRouter` with additional functionality. This custom router will be used as the main router for the FastAPI application.
+                """
+            ),
+        ] = None,
 
                 ---
 
