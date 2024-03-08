@@ -64,7 +64,8 @@ class FastAPI(Starlette):
     def __init__(
         self: AppType,
         *,
-        debug: Annotated[
+        router_class: Type[routing.APIRouter] = routing.APIRouter,
+        **extra: Annotated[
             bool,
             Doc(
                 """
@@ -82,6 +83,8 @@ class FastAPI(Starlette):
                 """
                 **Note**: you probably shouldn't use this parameter, it is inherited
                 from Starlette and supported for compatibility.
+                
+                * `router_class`: Custom router class to be used instead of the default `APIRouter`.
 
                 ---
 
@@ -857,7 +860,38 @@ class FastAPI(Starlette):
                 This is not passed as a parameter to the `FastAPI` class to avoid
                 giving the false idea that FastAPI would generate a different OpenAPI
                 schema. It is only available as an attribute.
-
+        if router_class and issubclass(router_class, routing.APIRouter):
+            self.router = router_class(
+                routes=routes,
+                redirect_slashes=redirect_slashes,
+                dependency_overrides_provider=self,
+                on_startup=on_startup,
+                on_shutdown=on_shutdown,
+                lifespan=lifespan,
+                default_response_class=default_response_class,
+                dependencies=dependencies,
+                callbacks=callbacks,
+                deprecated=deprecated,
+                include_in_schema=include_in_schema,
+                responses=responses,
+                generate_unique_id_function=generate_unique_id_function,
+            )
+        else:
+            self.router = routing.APIRouter(
+                routes=routes,
+                redirect_slashes=redirect_slashes,
+                dependency_overrides_provider=self,
+                on_startup=on_startup,
+                on_shutdown=on_shutdown,
+                lifespan=lifespan,
+                default_response_class=default_response_class,
+                dependencies=dependencies,
+                callbacks=callbacks,
+                deprecated=deprecated,
+                include_in_schema=include_in_schema,
+                responses=responses,
+                generate_unique_id_function=generate_unique_id_function,
+            )
                 **Example**
 
                 ```python
