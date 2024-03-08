@@ -1639,6 +1639,7 @@ class APIRouter(routing.Router):
                 [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
                 """
             ),
+        **custom_params: Any,
         ] = Default(generate_unique_id),
     ) -> Callable[[DecoratedCallable], DecoratedCallable]:
         """
@@ -1680,10 +1681,12 @@ class APIRouter(routing.Router):
             response_model_exclude_none=response_model_exclude_none,
             include_in_schema=include_in_schema,
             response_class=response_class,
+        custom_params=custom_params,
             name=name,
             callbacks=callbacks,
             openapi_extra=openapi_extra,
-            generate_unique_id_function=generate_unique_id_function,
+        **custom_params: Any,
+        ] = Default(generate_unique_id),
         )
 
     def put(
@@ -1704,7 +1707,7 @@ class APIRouter(routing.Router):
             Doc(
                 """
                 The type to use for the response.
-
+        custom_params=custom_params,
                 It could be any valid Pydantic *field* type. So, it doesn't have to
                 be a Pydantic model, it could be other things, like a `list`, `dict`,
                 etc.
@@ -2435,19 +2438,22 @@ class APIRouter(routing.Router):
             responses=responses,
             deprecated=deprecated,
             methods=["POST"],
-            operation_id=operation_id,
+        **custom_params: Any,
+        ] = Default(generate_unique_id),
             response_model_include=response_model_include,
             response_model_exclude=response_model_exclude,
             response_model_by_alias=response_model_by_alias,
             response_model_exclude_unset=response_model_exclude_unset,
             response_model_exclude_defaults=response_model_exclude_defaults,
+        custom_params=custom_params,
             response_model_exclude_none=response_model_exclude_none,
             include_in_schema=include_in_schema,
             response_class=response_class,
             name=name,
             callbacks=callbacks,
             openapi_extra=openapi_extra,
-            generate_unique_id_function=generate_unique_id_function,
+        **custom_params: Any,
+        ] = Default(generate_unique_id),
         )
 
     def delete(
@@ -2468,7 +2474,7 @@ class APIRouter(routing.Router):
             Doc(
                 """
                 The type to use for the response.
-
+        custom_params=custom_params,
                 It could be any valid Pydantic *field* type. So, it doesn't have to
                 be a Pydantic model, it could be other things, like a `list`, `dict`,
                 etc.
@@ -2780,6 +2786,7 @@ class APIRouter(routing.Router):
                 [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
                 """
             ),
+        **custom_params: Any,
         ] = Default(generate_unique_id),
     ) -> Callable[[DecoratedCallable], DecoratedCallable]:
         """
@@ -2818,13 +2825,15 @@ class APIRouter(routing.Router):
             response_model_by_alias=response_model_by_alias,
             response_model_exclude_unset=response_model_exclude_unset,
             response_model_exclude_defaults=response_model_exclude_defaults,
+        custom_params=custom_params,
             response_model_exclude_none=response_model_exclude_none,
             include_in_schema=include_in_schema,
             response_class=response_class,
             name=name,
             callbacks=callbacks,
             openapi_extra=openapi_extra,
-            generate_unique_id_function=generate_unique_id_function,
+        **custom_params: Any,
+        ] = Default(generate_unique_id),
         )
 
     def options(
@@ -2845,7 +2854,7 @@ class APIRouter(routing.Router):
             Doc(
                 """
                 The type to use for the response.
-
+        custom_params=custom_params,
                 It could be any valid Pydantic *field* type. So, it doesn't have to
                 be a Pydantic model, it could be other things, like a `list`, `dict`,
                 etc.
@@ -3157,6 +3166,7 @@ class APIRouter(routing.Router):
                 [FastAPI docs about how to Generate Clients](https://fastapi.tiangolo.com/advanced/generate-clients/#custom-generate-unique-id-function).
                 """
             ),
+        **custom_params: Any,
         ] = Default(generate_unique_id),
     ) -> Callable[[DecoratedCallable], DecoratedCallable]:
         """
@@ -3195,13 +3205,15 @@ class APIRouter(routing.Router):
             response_model_by_alias=response_model_by_alias,
             response_model_exclude_unset=response_model_exclude_unset,
             response_model_exclude_defaults=response_model_exclude_defaults,
+        custom_params=custom_params,
             response_model_exclude_none=response_model_exclude_none,
             include_in_schema=include_in_schema,
             response_class=response_class,
             name=name,
             callbacks=callbacks,
             openapi_extra=openapi_extra,
-            generate_unique_id_function=generate_unique_id_function,
+        **custom_params: Any,
+        ] = Default(generate_unique_id),
         )
 
     def head(
@@ -3222,7 +3234,7 @@ class APIRouter(routing.Router):
             Doc(
                 """
                 The type to use for the response.
-
+        custom_params=custom_params,
                 It could be any valid Pydantic *field* type. So, it doesn't have to
                 be a Pydantic model, it could be other things, like a `list`, `dict`,
                 etc.
